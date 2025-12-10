@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clique & Cuisine - L'univers de Tony & Vaness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #ff6b6b 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        body.dys-mode {
+            font-family: 'OpenDyslexic', 'Arial', sans-serif;
+            line-height: 2;
+            letter-spacing: 1px;
+            word-spacing: 3px;
+        }
+
+        body.dys-mode p, body.dys-mode li {
+            font-size: 1.4rem;
+        }
+
+        /* Thèmes par âge */
+        body.theme-petits {
+            background: linear-gradient(135deg, #4299e1 0%, #48bb78 100%);
+        }
+
+        body.theme-enfants {
+            background: linear-gradient(135deg, #f6ad55 0%, #fc8181 100%);
+        }
+
+        body.theme-ados {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .accessibility-bar {
+            background: #2d3748;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .accessibility-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .access-btn {
+            background: white;
+            color: #2d3748;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .access-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .access-btn.active {
+            background: #48bb78;
+            color: white;
+        }
+
+        header {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .logo-dual {
+            display: flex;
+            gap: 0;
+        }
+
+        .logo-left {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px 0 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .logo-right {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            border-radius: 0 20px 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        .brand-name {
+            background: linear-gradient(90deg, #667eea 0%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.4rem;
+            font-weight: normal;
+        }
+
+        nav {
+            background: #2d3748;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn {
+            background: white;
+            color: #2d3748;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(90deg, #667eea 0%, #ff6b6b 100%);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Modal de sélection d'âge */
+        .age-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .age-modal.hidden {
+            display: none;
+        }
+
+        .age-modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .age-modal h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #667eea;
+        }
+
+        .age-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .age-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 4px solid transparent;
+        }
+
+        .age-card:hover {
+            transform: scale(1.05);
+            border-color: #ffd700;
+        }
+
+        .age-card.petits {
+            background: linear-gradient(135deg, #4299e1 0%, #48bb78 100%);
+        }
+
+        .age-card.enfants {
+            background: linear-gradient(135deg, #f6ad55 0%, #fc8181 100%);
+        }
+
+        .age-card.ados {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .age-card.adultes {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+        }
+
+        .age-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .age-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .intro {
+            background: white;
+            padding: 2rem
